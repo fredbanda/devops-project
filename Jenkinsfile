@@ -8,8 +8,7 @@ pipeline {
         APP_NAME = "devops-project-pipeline"
         APP_VERSION = "1.0.0"
         DOCKER_USER = "fredbanda"
-        DOCKER_PASS = 'docker_hub'
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}" 
+        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
         IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
     }
 
@@ -47,7 +46,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage("Quality Gate") {
             steps {
                 script {
@@ -55,23 +54,19 @@ pipeline {
                 }
             }
         }
-      
-        stage('Build & push Docker image') {
+
+        stage('Build & Push Docker Image') {
             steps {
                 script {
-                    docker.withRegisrty('',DOCKER_PASS){
-                        docker_image = docker.build "${IMAGE_NAME}"
-                    }
+                    dockerImage = docker.build("${IMAGE_NAME}")
 
-                    docker.withRegistry('',DOCKER_PASS){
-                        docker_image.push("${IMAGE_TAG}")
-                        docker_image.push("latest")
+                    docker.withRegistry('', 'docker_hub') {
+                        dockerImage.push("${IMAGE_TAG}")
+                        dockerImage.push("latest")
                     }
                 }
             }
-
         }
-            
     }
 }
 
