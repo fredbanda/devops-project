@@ -4,6 +4,14 @@ pipeline {
         jdk 'Java17'
         maven 'Maven3'
     }
+    environment {
+        APP_NAME = "devops-project-pipeline"
+        APP_VERSION = "1.0.0"
+        DOCKER_USER = "fredbanda"
+        DOCKER_PASS = 'docker-hub'
+        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}" 
+        IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
+    }
 
     stages {
         stage('Cleanup Workspace') {
