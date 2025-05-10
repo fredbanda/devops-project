@@ -55,7 +55,23 @@ pipeline {
                 }
             }
         }
+      
+        stage('Build & push Docker image') {
+            steps {
+                script {
+                    docker.withRegisrty('',DOCKER_PASS){
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
 
+                    docker.withRegistry('',DOCKER_PASS){
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push("latest")
+                    }
+                }
+            }
+
+        }
+            
     }
 }
 
