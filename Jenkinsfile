@@ -8,7 +8,7 @@ pipeline {
         APP_NAME = "devops-project-pipeline"
         APP_VERSION = "1.0.0"
         DOCKER_USER = "fredbanda"
-        DOCKER_PASS = 'docker-hub'
+        DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}" 
         IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
     }
