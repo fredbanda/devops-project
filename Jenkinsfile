@@ -67,6 +67,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Trivy Vulnerability Scan') {
+            steps {
+                script {
+                    sh ('docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image fredbanda/devops-project-pipeline:latest --no-progress --scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table')
+                }
+            }
+        }
+
+        stage('Cleanup artifacts') {
+            steps {
+                script {
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
     }
 }
 
