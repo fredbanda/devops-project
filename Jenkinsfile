@@ -60,7 +60,7 @@ pipeline {
                 script {
                     dockerImage = docker.build("${IMAGE_NAME}")
 
-                    docker.withRegistry('', 'docker_hub') {
+                    docker.withRegistry('', 'dockerhub') {
                         dockerImage.push("${IMAGE_TAG}")
                         dockerImage.push("latest")
                     }
