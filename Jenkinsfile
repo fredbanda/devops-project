@@ -55,18 +55,18 @@ pipeline {
             }
         }
 
-        // stage('Build & Push Docker Image') {
-        //     steps {
-        //         script {
-        //             dockerImage = docker.build("${IMAGE_NAME}")
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("${IMAGE_NAME}")
 
-        //             docker.withRegistry('', 'docker_hub') {
-        //                 dockerImage.push("${IMAGE_TAG}")
-        //                 dockerImage.push("latest")
-        //             }
-        //         }
-        //     }
-        // }
+                    docker.withRegistry('', 'docker_hub') {
+                        dockerImage.push("${IMAGE_TAG}")
+                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
 
         // stage('Trivy Vulnerability Scan') {
         //     steps {
