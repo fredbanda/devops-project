@@ -68,30 +68,30 @@ pipeline {
             }
         }
 
-        // stage('Trivy Vulnerability Scan') {
-        //     steps {
-        //         script {
-        //             sh ('docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image fredbanda/devops-project-pipeline:latest --no-progress --scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table')
-        //         }
-        //     }
-        // }
+        stage('Trivy Vulnerability Scan') {
+            steps {
+                script {
+                    sh ('docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image fredbanda/devops-project-pipeline:latest --no-progress --scanners vuln --exit-code 0 --severity HIGH,CRITICAL --format table')
+                }
+            }
+        }
 
-        // stage('Cleanup artifacts') {
-        //     steps {
-        //         script {
-        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-        //             sh "docker rmi ${IMAGE_NAME}:latest"
-        //         }
-        //     }
-        // }
+        stage('Cleanup artifacts') {
+            steps {
+                script {
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
 
-        // stage('Trigger CD Pipeline'){
-        //     steps {
-        //         script {
-        //             sh "curl -v -k --user FredBanda:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://ec2-44-204-40-167.compute-1.amazonaws.com:8080/job/devops-agocd/buildWithParameters?token=devops-argocd-token'"
-        //         }
-        //     }
-        // }
+        stage('Trigger CD Pipeline'){
+            steps {
+                script {
+                    sh "curl -v -k --user FredBanda:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'http://ec2-44-204-40-167.compute-1.amazonaws.com:8080/job/devops-agocd/buildWithParameters?token=devops-argocd-token'"
+                }
+            }
+        }
     }
 }
 
