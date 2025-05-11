@@ -4,13 +4,13 @@ pipeline {
         jdk 'Java17'
         maven 'Maven3'
     }
-    // environment {
-    //     APP_NAME = "devops-project-pipeline"
-    //     APP_VERSION = "1.0.0"
-    //     DOCKER_USER = "fredbanda"
-    //     IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
-    //     IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
-    // }
+    environment {
+        APP_NAME = "devops-project-pipeline"
+        APP_VERSION = "1.0.0"
+        DOCKER_USER = "fredbanda"
+        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
+        IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
+    }
 
     stages {
         stage('Cleanup Workspace') {
@@ -37,23 +37,23 @@ pipeline {
             }
         }
 
-        // stage("SonarQube Analysis") {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentials: "jenkins-sonarqube-token") {
-        //                 sh "mvn sonar:sonar"
-        //             }
-        //         }
-        //     }
-        // }
+        stage("SonarQube Analysis") {
+            steps {
+                script {
+                    withSonarQubeEnv(credentials: "jenkins-sonarqube-token") {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+            }
+        }
 
-        // stage("Quality Gate") {
-        //     steps {
-        //         script {
-        //             waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
-        //         }
-        //     }
-        // }
+        stage("Quality Gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
+                }
+            }
+        }
 
         // stage('Build & Push Docker Image') {
         //     steps {
