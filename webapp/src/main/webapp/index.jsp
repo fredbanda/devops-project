@@ -33,7 +33,7 @@
 
    <h1> Thank You </h1>
    <br>
-   <h1> I promise to call you back asap for that job. Fred Banda is a hard worker and a good person. </h1>
+   <h1> As a developer I will never claim to know everything but I will learn. </h1>
    <br>
    <h1> I will be in touch with you soon. </h1>
    
